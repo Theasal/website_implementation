@@ -23,7 +23,8 @@
   height: auto;
 }
 
-a {
+.brand-info a,
+.link {
   display: block;
   margin-top: 10px;
   font-size: 15px;
