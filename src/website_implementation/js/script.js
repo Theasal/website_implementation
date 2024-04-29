@@ -9,15 +9,6 @@ dropdownBtns.forEach(function (btn) {
     } else {
       dropdownContent.style.display = "block";
     }
-    // Toggle the class for rotating the caret icon
     this.querySelector(".fa-caret-down").classList.toggle("rotate");
   });
-});
-
-window.addEventListener("DOMContentLoaded", function () {
-  fetch("home.html")
-    .then((response) => response.text())
-    .then((data) => {
-      document.querySelector(".main").innerHTML = data;
-    });
 });

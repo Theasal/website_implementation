@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home Page</title>
     <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/home.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
@@ -10,7 +12,9 @@
   </head>
   <body>
     <header class="header">
-      <img class="logo" src="media/logo.png" alt="logo" />
+      <a href="index.html">
+        <img class="logo" src="media/logo.png" alt="logo"
+      /></a>
     </header>
 
     <div class="sidenav">
@@ -46,10 +50,49 @@
         >
       </div>
     </div>
-
-    <div class="main">
-      <!-- Content from home.html will be inserted here -->
-    </div>
+    <main class="main">
+      <p class="title">Sustainable brands</p>
+      <div class="home-container">
+        <div class="brand-container">
+          <div class="brand-info">
+            <img
+              class="brand-logo"
+              src="media/greengarbcollective.png"
+              alt="logo"
+            />
+            <a href="greengarbcollective.html"
+              >Check out GreenGarb Collective -></a
+            >
+          </div>
+          <div class="brand-info">
+            <img
+              class="brand-logo"
+              src="media/earthlyeleganceapparel.png"
+              alt="logo"
+            />
+            <a href="earthlyeleganceapparel.html"
+              >Check out EarthlyElegance Apparel-></a
+            >
+          </div>
+          <div class="brand-info">
+            <img class="brand-logo" src="media/ecochictreads.png" alt="logo" />
+            <a href="ecochicthreads.html">Check out EcoChic Threads-></a>
+          </div>
+        </div>
+        <div>
+          <p class="title">Learn more about how to find sustainble clothes</p>
+          <p>
+            Learning to find sustainable clothes is not just about making a
+            statement – it's about making a difference. Our platform is here to
+            guide you through this exciting adventure. Discover the world of
+            sustainable fashion, where style meets sustainability. Learn how to
+            navigate through eco-friendly materials, ethical production
+            practices, and transparent supply chains.
+          </p>
+          <a href="find_sustainable.html" class="link">Learn more here-></a>
+        </div>
+      </div>
+    </main>
 
     <script src="js/script.js"></script>
   </body>
