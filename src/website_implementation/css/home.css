@@ -1,0 +1,31 @@
+.brand-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 40px;
+}
+
+.brand-info {
+  text-align: center;
+  width: 30%;
+  margin-bottom: 20px;
+}
+
+.brand-logo {
+  max-width: 200px;
+  height: auto;
+}
+
+a {
+  display: block;
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--text);
+}
