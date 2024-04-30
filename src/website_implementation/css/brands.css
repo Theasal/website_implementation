@@ -1,0 +1,20 @@
+.brand-logo {
+  width: 200px;
+  height: auto;
+  padding-left: 5%;
+}
+
+.brand-title {
+  margin-left: 10%;
+  margin-top: 5%;
+  font-size: 40px;
+  color: var(--text);
+}
+
+.brand-header {
+  display: flex;
+}
+.brand-info {
+  padding-left: 5%;
+  color: var(--text);
+}
