@@ -18,3 +18,22 @@
   padding-left: 5%;
   color: var(--text);
 }
+.product-title {
+  text-decoration: underline;
+  font-size: 30px;
+}
+.product-flex-container {
+  display: flex;
+}
+.product-picture {
+  width: 150px;
+  height: auto;
+}
+.product-box {
+  margin-left: 10%;
+}
+
+.product-box p {
+  margin: 0;
+  font-size: 20px;
+}
