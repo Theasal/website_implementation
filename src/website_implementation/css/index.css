@@ -68,7 +68,7 @@ body {
 .main {
   grid-area: content;
   font-size: 20px;
-  padding: 20px;
+  padding: 70px;
 }
 
 .active {
