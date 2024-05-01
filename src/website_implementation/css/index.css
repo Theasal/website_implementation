@@ -90,6 +90,15 @@ body {
 .rotate {
   transform: rotate(180deg);
 }
+/* Add this style to make the dropdown open */
+.dropdown-container.open {
+  display: block;
+}
+
+/* Add this style to highlight the text */
+.dropdown-container a.highlighted {
+  color: green; /* Change this to the desired color */
+}
 
 @media screen and (max-height: 450px) {
   .sidenav {
