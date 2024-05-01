@@ -1,0 +1,22 @@
+.product-flex-container {
+  display: flex;
+}
+.product-picture {
+  width: 150px;
+  height: auto;
+}
+.product-box {
+  margin-left: 10%;
+}
+
+.product-box p {
+  margin: 0;
+  font-size: 15px;
+}
+.title {
+  font-size: 40px;
+  display: center;
+}
+p {
+  margin-left: 10%;
+}
