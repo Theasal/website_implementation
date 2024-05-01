@@ -18,8 +18,13 @@
   padding-left: 5%;
   color: var(--text);
 }
+.brand-info a {
+  display: block;
+  margin-top: 10px;
+  font-size: 20px;
+  color: var(--text);
+}
 .product-title {
-  text-decoration: underline;
   font-size: 30px;
 }
 .product-flex-container {
