@@ -1,0 +1,14 @@
+.factbox {
+  width: 300px;
+  float: right;
+  padding: 10px;
+  border-top: 1px solid #2a5290;
+  border-bottom: 1px solid #2a5290;
+  margin: 0px 0px 10px 10px;
+}
+
+.factbox ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
