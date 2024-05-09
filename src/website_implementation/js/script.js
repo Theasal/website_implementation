@@ -13,7 +13,13 @@ dropdownBtns.forEach(function (btn) {
   });
 });
 
-console.log(dropdownBtns);
+var dropdownContainer = document.querySelectorAll(".dropdown-container");
+
+dropdownContainer.forEach(function (ctn) {
+  ctn.addEventListener("click", function () {
+    this.querySelector(".fa-caret-down").classList.toggle("rotate");
+  });
+});
 
 const baseURL =
   "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/daily_textile_waste/";
@@ -23,28 +29,30 @@ const requestOptions = {
   redirect: "follow",
 };
 
-fetch(baseURL, requestOptions)
-  .then((response) => response.json())
-  .then((data) => showFactBox(data));
+if (window.location.pathname.includes("design.html")) {
+  fetch(baseURL, requestOptions)
+    .then((response) => response.json())
+    .then((data) => showFactBox(data));
 
-showFactBox = (facts) => {
-  const factboxDiv = document.querySelector(".factbox ul");
-  const textileWasteElement = document.createElement("li");
-  textileWasteElement.innerHTML = `Textile waste in Australia: ${Math.round(
-    facts.textile_waste_australia_now
-  )} kg`;
-  factboxDiv.appendChild(textileWasteElement);
-  const slaveHoursElement = document.createElement("li");
-  slaveHoursElement.innerHTML = `Slave hours worked: ${Math.round(
-    facts.slave_hours_worked
-  )}`;
-  factboxDiv.appendChild(slaveHoursElement);
-  const childHoursElement = document.createElement("li");
-  childHoursElement.innerHTML = `Children hours worked: ${Math.round(
-    facts.children_hours_worked
-  )}`;
-  factboxDiv.appendChild(childHoursElement);
-  const profitElement = document.createElement("li");
-  profitElement.innerHTML = `Profit: ${Math.round(facts.profit_ytd)}`;
-  factboxDiv.appendChild(profitElement);
-};
+  showFactBox = (facts) => {
+    const factboxDiv = document.querySelector(".factbox ul");
+    const textileWasteElement = document.createElement("li");
+    textileWasteElement.innerHTML = `Textile waste in Australia: ${Math.round(
+      facts.textile_waste_australia_now
+    )} kg`;
+    factboxDiv.appendChild(textileWasteElement);
+    const slaveHoursElement = document.createElement("li");
+    slaveHoursElement.innerHTML = `Slave hours worked: ${Math.round(
+      facts.slave_hours_worked
+    )}`;
+    factboxDiv.appendChild(slaveHoursElement);
+    const childHoursElement = document.createElement("li");
+    childHoursElement.innerHTML = `Children hours worked: ${Math.round(
+      facts.children_hours_worked
+    )}`;
+    factboxDiv.appendChild(childHoursElement);
+    const profitElement = document.createElement("li");
+    profitElement.innerHTML = `Profit: ${Math.round(facts.profit_ytd)}`;
+    factboxDiv.appendChild(profitElement);
+  };
+}
