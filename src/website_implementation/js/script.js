@@ -68,7 +68,6 @@ var links = document.querySelectorAll(".sidenav a");
 links.forEach(function (link) {
   link.addEventListener("click", function (event) {
     event.preventDefault();
-    console.log(event);
 
     links.forEach(function (link) {
       link.classList.remove("highlighted");
@@ -80,3 +79,46 @@ links.forEach(function (link) {
     document.getElementById("content-frame").src = href;
   });
 });
+
+const baseURLPost =
+  "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/genericproduct/";
+
+const handleFormSubmit = (event) => {
+  event.preventDefault();
+
+  const form = document.getElementById("contributeForm");
+  const formData = new FormData(form);
+  const sizes = [];
+  document
+    .querySelectorAll('input[type="checkbox"]:checked')
+    .forEach((checkbox) => {
+      sizes.push(checkbox.value);
+    });
+  const sizesString = sizes.join(",");
+
+  formData.set("product_info1", sizesString);
+
+  const requestOptionsPost = {
+    method: "POST",
+    body: formData,
+    redirect: "follow",
+  };
+
+  fetch(baseURLPost, requestOptionsPost)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Success:", data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+
+document
+  .getElementById("contributeForm")
+  .addEventListener("submit", handleFormSubmit);
