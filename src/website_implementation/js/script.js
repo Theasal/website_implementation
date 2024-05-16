@@ -13,14 +13,6 @@ dropdownBtns.forEach(function (btn) {
   });
 });
 
-var dropdownContainer = document.querySelectorAll(".dropdown-container");
-
-dropdownContainer.forEach(function (ctn) {
-  ctn.addEventListener("click", function () {
-    this.querySelector(".fa-caret-down").classList.toggle("rotate");
-  });
-});
-
 const baseURL =
   "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/daily_textile_waste/";
 
@@ -56,3 +48,35 @@ if (window.location.pathname.includes("design.html")) {
     factboxDiv.appendChild(profitElement);
   };
 }
+
+var links = document.querySelectorAll(".sidenav a");
+
+console.log(links);
+
+links.forEach(function (link) {
+  link.addEventListener("click", function (event) {
+    event.preventDefault();
+    console.log(event);
+
+    var href = this.getAttribute("href");
+    document.getElementById("content-frame").src = href;
+  });
+});
+
+var links = document.querySelectorAll(".sidenav a");
+
+links.forEach(function (link) {
+  link.addEventListener("click", function (event) {
+    event.preventDefault();
+    console.log(event);
+
+    links.forEach(function (link) {
+      link.classList.remove("highlighted");
+    });
+
+    this.classList.add("highlighted");
+
+    var href = this.getAttribute("href");
+    document.getElementById("content-frame").src = href;
+  });
+});
