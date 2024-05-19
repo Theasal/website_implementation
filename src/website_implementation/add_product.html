@@ -1,68 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/add_product.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+
+    <title>Sell sustainable clothing</title>
   </head>
-
-  <main class="main">
-    <h1>Contribute to sustainability</h1>
-    <form id="contributeForm">
-      <div class="form-group">
-        <label for="product_name">Product name:</label><br />
-        <input type="text" id="product_name" name="product_name" />
-      </div>
-      <div class="form-group">
-        <label for="product_owner">Product owner:</label><br />
-        <input type="text" id="product_owner" name="product_owner" />
-      </div>
-      <div class="form-group">
-        <label for="product_description">Product description:</label><br />
-        <input
-          type="text"
-          id="product_description"
-          name="product_description"
-        />
-      </div>
-      <div class="form-group">
-        <label for="product_info1">Available sizes: </label><br />
-        <input type="checkbox" id="XS" name="XS" value="XS" />
-        <label for="XS">XS</label><br />
-        <input type="checkbox" id="S" name="S" value="S" />
-        <label for="S">S</label><br />
-        <input type="checkbox" id="M" name="M" value="M" />
-        <label for="M">M</label><br />
-        <input type="checkbox" id="L" name="L" value="L" />
-        <label for="L">L</label><br />
-        <input type="checkbox" id="XL" name="XL" value="XL" />
-        <label for="XL">XL</label><br />
-        <input type="checkbox" id="XXL" name="XXL" value="XXL" />
-        <label for="XXL">XXL</label><br />
-      </div>
-      <div class="form-group">
-        <label for="product_info2">Price:</label><br />
-        <input type="number" id="product_info2" name="product_info2" />
-      </div>
-      <div class="form-group">
-        <label for="product_photo">Upload Photo:</label><br />
-        <input
-          type="file"
-          id="product_photo"
-          name="product_photo"
-          accept="image/*"
-        />
-      </div>
-      <div class="form-group">
-        <label for="website_code">Website code:</label><br />
-        <input type="text" id="website_code" name="website_code" />
-      </div>
-
-      <button id="submit" name="submit">Submit</button>
-    </form>
-  </main>
-  <script src="js/script.js"></script>
+  <body>
+    <main class="main">
+      <h1>Sell sustainable clothing</h1>
+      <form id="contributeForm">
+        <div class="form-group">
+          <label for="product_name">Product name:</label>
+          <input type="text" id="product_name" name="product_name" />
+        </div>
+        <div class="form-group">
+          <label for="product_owner">Product owner:</label>
+          <input type="text" id="product_owner" name="product_owner" />
+        </div>
+        <div class="form-group">
+          <label for="product_description">Product description:</label>
+          <input
+            type="text"
+            id="product_description"
+            name="product_description"
+          />
+        </div>
+        <div class="form-group">
+          <label for="product_info1">Available sizes:</label>
+          <div class="checkbox-group">
+            <input
+              type="checkbox"
+              id="onesize"
+              name="onesize"
+              value="onesize"
+            />
+            <label for="onesize">Onesize</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="XS" name="XS" value="XS" />
+            <label for="XS">XS</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="S" name="S" value="S" />
+            <label for="S">S</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="M" name="M" value="M" />
+            <label for="M">M</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="L" name="L" value="L" />
+            <label for="L">L</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="XL" name="XL" value="XL" />
+            <label for="XL">XL</label>
+          </div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="XXL" name="XXL" value="XXL" />
+            <label for="XXL">XXL</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="product_info2">Price:</label>
+          <input type="number" id="product_info2" name="product_info2" />
+        </div>
+        <div class="form-group">
+          <label for="product_photo">Upload Photo:</label>
+          <input
+            type="file"
+            id="product_photo"
+            name="product_photo"
+            accept="image/*"
+          />
+        </div>
+        <button id="submit" name="submit" class="submit-btn">Submit</button>
+      </form>
+    </main>
+    <script src="js/script.js"></script>
+  </body>
 </html>
