@@ -7,17 +7,6 @@
   --border-color: #ccb493;
 }
 
-body {
-  display: grid;
-  grid-template-columns: 230px 1fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "header header"
-    "sidenav content";
-  height: 100vh;
-  margin: 0;
-}
-
 .header {
   grid-area: header;
   background-color: var(--background_elements);
@@ -129,6 +118,9 @@ body {
 .main.hidden {
   display: none;
 }
+.sidenav.open {
+  display: block;
+}
 .exit-btn {
   position: absolute;
   top: 125px;
@@ -140,7 +132,7 @@ body {
   cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   body {
     display: grid;
     grid-template-columns: 1fr;
@@ -151,23 +143,33 @@ body {
     height: 100vh;
     margin: 0;
   }
+  body.sidenav {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "header"
+      "sidenav";
+    height: 100vh;
+    margin: 0;
+  }
 
   .sidenav {
-    display: none;
-  }
-  .sidenav.open {
-    display: block;
-  }
-  .main.hidden  {
     display: none;
   }
 
   .sidenav-btn {
     display: block;
   }
+  .exit-btn.hidden {
+    display: none;
+  }
+  .sidenav-btn.hidden {
+    display: none;
+  }
 }
 
-@media screen and (min-width: 769px) {
+@media only screen and (min-width: 769px) {
   body {
     display: grid;
     grid-template-columns: 230px 1fr;
@@ -184,6 +186,9 @@ body {
   }
 
   .sidenav-btn {
+    display: none;
+  }
+  .exit-btn {
     display: none;
   }
 }
