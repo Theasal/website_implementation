@@ -2,36 +2,30 @@
 const baseURL =
   "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/genericproduct/";
 const my_website_code = "theassa";
-
 const sidenavBtn = document.querySelector(".sidenav-btn");
 const exitBtn = document.querySelector(".exit-btn");
+const sidenav = document.getElementById("sidenav");
+const main = document.querySelector(".main");
+const body = document.querySelector("body");
+const fileInput = document.getElementById("product_photo");
+const fileLabel = document.getElementById("file_label");
 
-document.addEventListener("DOMContentLoaded", () => {
-  const sidenav = document.querySelector(".sidenav");
-  const main = document.querySelector(".main");
-  const body = document.querySelector("body");
-  const sidenavBtn = document.querySelector(".sidenav-btn");
-  const exitBtn = document.querySelector(".exit-btn");
-
-  const toggleNav = (open) => {
-    if (open) {
-      sidenav.classList.add("open");
-      main.classList.add("hidden");
-      body.classList.add("sidenav");
-      exitBtn.classList.remove("hidden");
-      sidenavBtn.classList.add("hidden");
-    } else {
-      sidenav.classList.remove("open");
-      main.classList.remove("hidden");
-      body.classList.remove("sidenav");
-      exitBtn.classList.add("hidden");
-      sidenavBtn.classList.remove("hidden");
-    }
-  };
-
-  sidenavBtn.addEventListener("click", () => toggleNav(true));
-  exitBtn.addEventListener("click", () => toggleNav(false));
-});
+// Constant Functions
+const toggleNav = (open) => {
+  if (open) {
+    sidenav.classList.add("open");
+    main.classList.add("hidden");
+    body.classList.add("sidenav");
+    exitBtn.classList.remove("hidden");
+    sidenavBtn.classList.add("hidden");
+  } else {
+    sidenav.classList.remove("open");
+    main.classList.remove("hidden");
+    body.classList.remove("sidenav");
+    exitBtn.classList.add("hidden");
+    sidenavBtn.classList.remove("hidden");
+  }
+};
 
 const handleFormSubmit = (event) => {
   event.preventDefault();
@@ -136,8 +130,15 @@ function renderProduct(product) {
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function () {
-  const fileInput = document.getElementById("product_photo");
-  const fileLabel = document.getElementById("file_label");
+  if (sidenavBtn) {
+    // Event listener for sidenav button
+    sidenavBtn.addEventListener("click", () => toggleNav(true));
+  }
+
+  if (exitBtn) {
+    // Event listener for exit button
+    exitBtn.addEventListener("click", () => toggleNav(false));
+  }
 
   if (fileInput && fileLabel) {
     fileInput.addEventListener("change", handleFileChange);
@@ -158,18 +159,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  var links = document.querySelectorAll(".sidenav a");
+  var links = document.querySelectorAll("#sidenav a");
 
   links.forEach(function (link) {
     link.addEventListener("click", function (event) {
       event.preventDefault();
       var href = this.getAttribute("href");
-      const sidenav = document.querySelector(".sidenav");
-      if (sidenav.classList.contains("open")) {
-        toggleNav();
-      }
-
       document.getElementById("content-frame").src = href;
+      if (window.innerWidth < 769) {
+        toggleNav(false);
+      }
     });
   });
 
