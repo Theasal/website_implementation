@@ -1,88 +1,9 @@
-var dropdownBtns = document.querySelectorAll(".dropdown-btn");
-
-dropdownBtns.forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    this.classList.toggle("active");
-    var dropdownContent = this.nextElementSibling;
-    if (dropdownContent.style.display === "block") {
-      dropdownContent.style.display = "none";
-    } else {
-      dropdownContent.style.display = "block";
-    }
-    this.querySelector(".fa-caret-down").classList.toggle("rotate");
-  });
-});
-
+// Global Constants
 const baseURL =
-  "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/daily_textile_waste/";
-
-const requestOptions = {
-  method: "GET",
-  redirect: "follow",
-};
-
-if (window.location.pathname.includes("design.html")) {
-  fetch(baseURL, requestOptions)
-    .then((response) => response.json())
-    .then((data) => showFactBox(data));
-
-  showFactBox = (facts) => {
-    const factboxDiv = document.querySelector(".factbox ul");
-    const textileWasteElement = document.createElement("li");
-    textileWasteElement.innerHTML = `Textile waste in Australia: ${Math.round(
-      facts.textile_waste_australia_now
-    )} kg`;
-    factboxDiv.appendChild(textileWasteElement);
-    const slaveHoursElement = document.createElement("li");
-    slaveHoursElement.innerHTML = `Slave hours worked: ${Math.round(
-      facts.slave_hours_worked
-    )}`;
-    factboxDiv.appendChild(slaveHoursElement);
-    const childHoursElement = document.createElement("li");
-    childHoursElement.innerHTML = `Children hours worked: ${Math.round(
-      facts.children_hours_worked
-    )}`;
-    factboxDiv.appendChild(childHoursElement);
-    const profitElement = document.createElement("li");
-    profitElement.innerHTML = `Profit: ${Math.round(facts.profit_ytd)}`;
-    factboxDiv.appendChild(profitElement);
-  };
-}
-
-var links = document.querySelectorAll(".sidenav a");
-
-console.log(links);
-
-links.forEach(function (link) {
-  link.addEventListener("click", function (event) {
-    event.preventDefault();
-    console.log(event);
-
-    var href = this.getAttribute("href");
-    document.getElementById("content-frame").src = href;
-  });
-});
-
-var links = document.querySelectorAll(".sidenav a");
-
-links.forEach(function (link) {
-  link.addEventListener("click", function (event) {
-    event.preventDefault();
-
-    links.forEach(function (link) {
-      link.classList.remove("highlighted");
-    });
-
-    this.classList.add("highlighted");
-
-    var href = this.getAttribute("href");
-    document.getElementById("content-frame").src = href;
-  });
-});
-
-const baseURLPost =
   "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/genericproduct/";
+const my_website_code = "theassa";
 
+// Constant Functions
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
@@ -97,14 +18,15 @@ const handleFormSubmit = (event) => {
   const sizesString = sizes.join(",");
 
   formData.set("product_info1", sizesString);
+  formData.set("website_code", my_website_code);
 
-  const requestOptionsPost = {
+  const requestOptions = {
     method: "POST",
     body: formData,
     redirect: "follow",
   };
 
-  fetch(baseURLPost, requestOptionsPost)
+  fetch(baseURL, requestOptions)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -119,6 +41,133 @@ const handleFormSubmit = (event) => {
     });
 };
 
-document
-  .getElementById("contributeForm")
-  .addEventListener("submit", handleFormSubmit);
+const handleFileChange = () => {
+  const fileInput = document.getElementById("product_photo");
+  const fileLabel = document.getElementById("file_label");
+  let fileName = fileInput.files[0].name;
+  if (fileName.length > 20) {
+    fileName = fileName.substring(0, 18) + "...";
+  }
+  fileLabel.innerHTML = `${fileName}`;
+};
+
+function renderProduct(product) {
+  if (window.location.pathname.endsWith("products.html")) {
+    const productFlexContainerTop = document.querySelector(
+      ".product-flex-container-top"
+    );
+
+    const productFlexContainerBottom = document.querySelector(
+      ".product-flex-container-bottom"
+    );
+    const productFlexContainerAccessories = document.querySelector(
+      ".product-flex-container-accessories"
+    );
+
+    const productBox = document.createElement("div");
+    productBox.classList.add("product-box");
+
+    const img = document.createElement("img");
+    img.src = product.product_photo;
+    img.alt = product.product_name;
+    img.classList.add("product-picture");
+    productBox.appendChild(img);
+
+    const productName = document.createElement("p");
+    productName.textContent = product.product_name;
+    productBox.appendChild(productName);
+
+    const productOwner = document.createElement("p");
+    productOwner.textContent = product.product_owner;
+    productBox.appendChild(productOwner);
+
+    const productPrice = document.createElement("p");
+    productPrice.textContent = `$${product.product_info2}`;
+    productBox.appendChild(productPrice);
+
+    if (product.product_name === "Sweater" || product.product_name === "Top") {
+      if (productFlexContainerTop) {
+        productFlexContainerTop.appendChild(productBox);
+      }
+    } else if (
+      product.product_name === "Skirt" ||
+      product.product_name === "Pant" ||
+      product.product_name === "Jeans"
+    ) {
+      if (productFlexContainerBottom) {
+        productFlexContainerBottom.appendChild(productBox);
+      }
+    } else {
+      if (productFlexContainerAccessories) {
+        productFlexContainerAccessories.appendChild(productBox);
+      }
+    }
+  }
+}
+
+// Event Listeners
+document.addEventListener("DOMContentLoaded", function () {
+  const fileInput = document.getElementById("product_photo");
+  const fileLabel = document.getElementById("file_label");
+
+  if (fileInput && fileLabel) {
+    fileInput.addEventListener("change", handleFileChange);
+  }
+
+  const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+
+  dropdownBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      this.classList.toggle("active");
+      var dropdownContent = this.nextElementSibling;
+      if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+      } else {
+        dropdownContent.style.display = "block";
+      }
+      this.querySelector(".fa-caret-down").classList.toggle("rotate");
+    });
+  });
+
+  var links = document.querySelectorAll(".sidenav a");
+
+  links.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      var href = this.getAttribute("href");
+      document.getElementById("content-frame").src = href;
+    });
+  });
+
+  links.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      links.forEach(function (link) {
+        link.classList.remove("highlighted");
+      });
+
+      this.classList.add("highlighted");
+
+      var href = this.getAttribute("href");
+      document.getElementById("content-frame").src = href;
+    });
+  });
+
+  const queryParams = {
+    website_code: my_website_code,
+  };
+  const queryString = new URLSearchParams(queryParams).toString();
+  const urlWithParams = baseURL + "?" + queryString;
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow",
+  };
+  fetch(urlWithParams, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((product) => {
+        renderProduct(product);
+      });
+    });
+});
