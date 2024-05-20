@@ -1,19 +1,7 @@
-:root {
-  --background: #ffffff;
-  --background_elements: #f6ecde;
-  --text: #020202;
-  --background_dropdown: #ccb493;
-  --selected: #decbb0;
-  --border-color: #ccb493;
-}
-
+@import url("index.css");
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-}
-
-.main {
-  padding: 20px;
+  font-family: var(--font-family);
 }
 
 .title {
@@ -51,15 +39,14 @@ body {
   margin-top: 10px;
   font-size: 15px;
   color: var(--text);
-  text-decoration: none;
+}
+.title {
+  font-size: 30px;
+  text-align: center;
+  font-family: var(--font-family);
 }
 
 @media (max-width: 768px) {
-  .title {
-    font-size: 30px;
-    text-align: center;
-  }
-
   .brand-info {
     flex: 1 1 100%;
     margin: 10px 0;
