@@ -1,5 +1,10 @@
-.product-flex-container {
+.product-flex-container,
+.product-flex-container-top,
+.product-flex-container-bottom,
+.product-flex-container-accessories {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .product-picture {
   width: 150px;
@@ -19,9 +24,4 @@
 }
 p {
   margin-left: 10%;
-}
-.product-flex-container-top,
-.product-flex-container-bottom,
-.product-flex-container-accessories {
-  display: flex;
 }
