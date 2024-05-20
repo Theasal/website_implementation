@@ -1,3 +1,5 @@
+@import url("index.css");
+
 body {
   background-color: var(--background);
   font-family: Arial, sans-serif;
@@ -5,22 +7,21 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
 .main {
-  background-color: var(--background_elements);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 90%;
   max-width: 600px;
   text-align: center;
 }
 
 h1 {
+  margin-top: 150px;
   margin-bottom: 20px;
   font-size: 24px;
   color: var(--text);
@@ -55,6 +56,26 @@ input[type="file"]:focus {
   outline: none;
 }
 
+input[type="file"] {
+  display: none;
+}
+
+label[for="product_photo"] {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--background_dropdown);
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+label[for="product_photo"]:hover {
+  background-color: var(--selected);
+  border-color: var(--selected);
+}
+
 .checkbox-group {
   display: flex;
   align-items: center;
@@ -64,19 +85,25 @@ input[type="file"]:focus {
 .checkbox-group input[type="checkbox"] {
   margin-right: 10px;
 }
+.checkbox-group label {
+  font-size: 15px;
+}
 
 .submit-btn {
   background-color: var(--background_dropdown);
   color: var(--text);
-  padding: 10px 20px;
-  border: 2px solid var(--background_dropdown); /* Added border */
+  padding: 15px 30px;
+  border: 2px solid var(--background_dropdown);
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   transition: background-color 0.3s, border-color 0.3s;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
 }
 
 .submit-btn:hover {
   background-color: var(--selected);
-  border-color: var(--selected); /* Updated border color on hover */
+  border-color: var(--selected);
 }
