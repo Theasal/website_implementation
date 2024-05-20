@@ -2,16 +2,15 @@
 const baseURL =
   "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/genericproduct/";
 const my_website_code = "theassa";
-const sidenavBtn = document.querySelector(".sidenav-btn");
-const exitBtn = document.querySelector(".exit-btn");
-const sidenav = document.getElementById("sidenav");
-const main = document.querySelector(".main");
-const body = document.querySelector("body");
-const fileInput = document.getElementById("product_photo");
-const fileLabel = document.getElementById("file_label");
 
 // Constant Functions
 const toggleNav = (open) => {
+  const sidenav = document.getElementById("sidenav");
+  const main = document.querySelector(".main");
+  const body = document.querySelector("body");
+  const exitBtn = document.getElementById("exit-btn");
+  const sidenavBtn = document.getElementById("sidenav-btn");
+
   if (open) {
     sidenav.classList.add("open");
     main.classList.add("hidden");
@@ -78,7 +77,6 @@ function renderProduct(product) {
   const productFlexContainerTop = document.querySelector(
     ".product-flex-container-top"
   );
-
   const productFlexContainerBottom = document.querySelector(
     ".product-flex-container-bottom"
   );
@@ -128,60 +126,70 @@ function renderProduct(product) {
 
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function () {
-  if (sidenavBtn) {
-    // Event listener for sidenav button
-    sidenavBtn.addEventListener("click", () => toggleNav(true));
+  // Function to load HTML content from a file into a specified element
+  function loadHTML(elementId, filePath, callback) {
+    fetch(filePath)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Could not load ${filePath}: ${response.statusText}`);
+        }
+        return response.text();
+      })
+      .then((data) => {
+        document.getElementById(elementId).innerHTML = data;
+        if (callback) callback();
+      })
+      .catch((error) => console.error("Error loading HTML:", error));
   }
 
-  if (exitBtn) {
-    // Event listener for exit button
-    exitBtn.addEventListener("click", () => toggleNav(false));
-  }
+  // Load the header and sidenav into their respective placeholders
+  loadHTML("header-placeholder", "header.html");
+  loadHTML("sidenav-placeholder", "sidenav.html", () => {
+    // Now that sidenav is loaded, add event listeners
+    const sidenavBtn = document.getElementById("sidenav-btn");
+    const exitBtn = document.getElementById("exit-btn");
+    if (sidenavBtn) {
+      sidenavBtn.addEventListener("click", () => toggleNav(true));
+    }
+    if (exitBtn) {
+      exitBtn.addEventListener("click", () => toggleNav(false));
+    }
 
-  if (fileInput && fileLabel) {
-    fileInput.addEventListener("change", handleFileChange);
-  }
+    const fileInput = document.getElementById("product_photo");
+    const fileLabel = document.getElementById("file_label");
+    if (fileInput && fileLabel) {
+      fileInput.addEventListener("change", handleFileChange);
+    }
 
-  const dropdownBtns = document.querySelectorAll(".dropdown-btn");
-
-  dropdownBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      this.classList.toggle("active");
-      var dropdownContent = this.nextElementSibling;
-      if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
-      } else {
-        dropdownContent.style.display = "block";
-      }
-      this.querySelector(".fa-caret-down").classList.toggle("rotate");
+    const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+    dropdownBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        this.classList.toggle("active");
+        const dropdownContent = this.nextElementSibling;
+        dropdownContent.style.display =
+          dropdownContent.style.display === "block" ? "none" : "block";
+        this.querySelector(".fa-caret-down").classList.toggle("rotate");
+      });
     });
-  });
 
-  var links = document.querySelectorAll("#sidenav a");
-
-  links.forEach(function (link) {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-      var href = this.getAttribute("href");
-      document.getElementById("content-frame").src = href;
-      if (window.innerWidth < 769) {
-        toggleNav(false);
-      }
-    });
-  });
-
-  links.forEach(function (link) {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      links.forEach(function (link) {
-        link.classList.remove("highlighted");
+    const links = document.querySelectorAll("#sidenav a");
+    links.forEach((link) => {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        const href = this.getAttribute("href");
+        document.getElementById("content-frame").src = href;
+        if (window.innerWidth < 769) {
+          toggleNav(false);
+        }
       });
 
-      this.classList.add("highlighted");
-
-      var href = this.getAttribute("href");
-      document.getElementById("content-frame").src = href;
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        links.forEach((link) => link.classList.remove("highlighted"));
+        this.classList.add("highlighted");
+        const href = this.getAttribute("href");
+        document.getElementById("content-frame").src = href;
+      });
     });
   });
 

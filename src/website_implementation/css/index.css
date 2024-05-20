@@ -7,109 +7,29 @@
   --border-color: #ccb493;
   --font-family: Arial, sans-serif;
 }
+body {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header header"
+    "sidenav content";
+  height: 100vh;
+  margin: 0;
+}
 
-.header {
+#header-placeholder {
   grid-area: header;
-  background-color: var(--background_elements);
-  width: 100%;
-  height: 130px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-.logo {
-  width: 130px;
-  height: auto;
-}
-
-#sidenav {
+#sidenav-placeholder {
   grid-area: sidenav;
-  background-color: var(--background_elements);
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-#sidenav a,
-.dropdown-btn {
-  padding: 6px 8px 30px 30px;
-  text-decoration: none;
-  font-size: 23px;
-  color: var(--text);
-  display: block;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-}
-
-.contribute {
-  padding: 6px 8px 30px 0px;
-  text-decoration: none;
-  font-size: 23px;
-  color: var(--text);
-  display: block;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-}
-
-.sidenav-btn {
-  background-color: var(--background_elements);
-  position: absolute;
-  top: 130px;
-  left: 0;
-  cursor: pointer;
-}
-
-#sidenav a:hover,
-.dropdown-btn:hover {
-  color: var(--text);
-}
-
-#sidenav .dropdown-container a {
-  font-size: 16px;
-  overflow-wrap: break-word;
-  width: 200px;
 }
 
 .main {
   grid-area: content;
   font-size: 20px;
   padding: 2%;
-}
-
-.active {
-  background-color: var(--selected);
-}
-
-.dropdown-container {
-  font-size: 5px;
-  display: none;
-  background-color: var(--background_dropdown);
-  padding-left: 8px;
-}
-
-.fa-caret-down {
-  float: right;
-  padding-right: 8px;
-}
-
-.rotate {
-  transform: rotate(180deg);
-}
-
-.dropdown-container.open {
-  display: block;
-}
-
-#sidenav .dropdown-container a.highlighted {
-  color: green;
 }
 
 #content-frame {
@@ -120,80 +40,16 @@
 .main.hidden {
   display: none;
 }
-#sidenav.open {
-  display: block;
-}
-.exit-btn {
-  position: absolute;
-  top: 125px;
-  right: 10px;
-  margin-bottom: 20px;
-  background-color: transparent;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
 
 @media only screen and (max-width: 768px) {
   body {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      "header"
-      "content";
-    height: 100vh;
-    margin: 0;
+    grid-template-columns: 30px 1fr;
   }
   body.sidenav {
-    display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas:
       "header"
       "sidenav";
-    height: 100vh;
-    margin: 0;
-  }
-
-  #sidenav {
-    display: none;
-  }
-
-  .sidenav-btn {
-    display: block;
-  }
-  .exit-btn.hidden {
-    display: none;
-  }
-  .sidenav-btn.hidden {
-    display: none;
-  }
-}
-
-@media only screen and (min-width: 769px) {
-  body {
-    display: grid;
-    grid-template-columns: 230px 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      "header header"
-      "sidenav content";
-    height: 100vh;
-    margin: 0;
-  }
-
-  #sidenav {
-    display: block;
-  }
-
-  .sidenav-btn {
-    display: none;
-  }
-  .exit-btn {
-    display: none;
-  }
-  .main {
-    margin-left: -100px;
   }
 }
