@@ -3,7 +3,38 @@ const baseURL =
   "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/genericproduct/";
 const my_website_code = "theassa";
 
-// Constant Functions
+const toggleNav = () => {
+  const sidenav = document.querySelector(".sidenav");
+  const main = document.querySelector(".main");
+  const body = document.querySelector("body");
+
+  sidenav.classList.toggle("open");
+  main.classList.toggle("hidden");
+
+  if (sidenav.classList.contains("open")) {
+    body.style.gridTemplateAreas = `"header" "sidenav"`;
+    body.style.gridTemplateColumns = "1fr";
+    body.style.gridTemplateRows = "auto 1fr";
+  } else {
+    body.style.gridTemplateAreas = `"header" "content"`;
+    body.style.gridTemplateColumns = " 1fr";
+    body.style.gridTemplateRows = "auto 1fr";
+  }
+};
+
+const sidenavBtn = document.querySelector(".sidenav-btn");
+const exitBtn = document.querySelector(".exit-btn");
+
+sidenavBtn.addEventListener("click", () => {
+  sidenavBtn.classList.add("open");
+  toggleNav();
+});
+
+exitBtn.addEventListener("click", () => {
+  sidenavBtn.classList.remove("open");
+  toggleNav();
+});
+
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
@@ -135,6 +166,11 @@ document.addEventListener("DOMContentLoaded", function () {
     link.addEventListener("click", function (event) {
       event.preventDefault();
       var href = this.getAttribute("href");
+      const sidenav = document.querySelector(".sidenav");
+      if (sidenav.classList.contains("open")) {
+        toggleNav();
+      }
+
       document.getElementById("content-frame").src = href;
     });
   });
