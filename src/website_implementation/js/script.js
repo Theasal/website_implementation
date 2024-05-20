@@ -75,55 +75,53 @@ const handleFileChange = () => {
 };
 
 function renderProduct(product) {
-  if (window.location.pathname.endsWith("products.html")) {
-    const productFlexContainerTop = document.querySelector(
-      ".product-flex-container-top"
-    );
+  const productFlexContainerTop = document.querySelector(
+    ".product-flex-container-top"
+  );
 
-    const productFlexContainerBottom = document.querySelector(
-      ".product-flex-container-bottom"
-    );
-    const productFlexContainerAccessories = document.querySelector(
-      ".product-flex-container-accessories"
-    );
+  const productFlexContainerBottom = document.querySelector(
+    ".product-flex-container-bottom"
+  );
+  const productFlexContainerAccessories = document.querySelector(
+    ".product-flex-container-accessories"
+  );
 
-    const productBox = document.createElement("div");
-    productBox.classList.add("product-box");
+  const productBox = document.createElement("div");
+  productBox.classList.add("product-box");
 
-    const img = document.createElement("img");
-    img.src = product.product_photo;
-    img.alt = product.product_name;
-    img.classList.add("product-picture");
-    productBox.appendChild(img);
+  const img = document.createElement("img");
+  img.src = product.product_photo;
+  img.alt = product.product_name;
+  img.classList.add("product-picture");
+  productBox.appendChild(img);
 
-    const productName = document.createElement("p");
-    productName.textContent = product.product_name;
-    productBox.appendChild(productName);
+  const productName = document.createElement("p");
+  productName.textContent = product.product_name;
+  productBox.appendChild(productName);
 
-    const productOwner = document.createElement("p");
-    productOwner.textContent = product.product_owner;
-    productBox.appendChild(productOwner);
+  const productOwner = document.createElement("p");
+  productOwner.textContent = product.product_owner;
+  productBox.appendChild(productOwner);
 
-    const productPrice = document.createElement("p");
-    productPrice.textContent = `$${product.product_info2}`;
-    productBox.appendChild(productPrice);
+  const productPrice = document.createElement("p");
+  productPrice.textContent = `$${product.product_info2}`;
+  productBox.appendChild(productPrice);
 
-    if (product.product_name === "Sweater" || product.product_name === "Top") {
-      if (productFlexContainerTop) {
-        productFlexContainerTop.appendChild(productBox);
-      }
-    } else if (
-      product.product_name === "Skirt" ||
-      product.product_name === "Pant" ||
-      product.product_name === "Jeans"
-    ) {
-      if (productFlexContainerBottom) {
-        productFlexContainerBottom.appendChild(productBox);
-      }
-    } else {
-      if (productFlexContainerAccessories) {
-        productFlexContainerAccessories.appendChild(productBox);
-      }
+  if (product.product_name === "Sweater" || product.product_name === "Top") {
+    if (productFlexContainerTop) {
+      productFlexContainerTop.appendChild(productBox);
+    }
+  } else if (
+    product.product_name === "Skirt" ||
+    product.product_name === "Pant" ||
+    product.product_name === "Jeans"
+  ) {
+    if (productFlexContainerBottom) {
+      productFlexContainerBottom.appendChild(productBox);
+    }
+  } else {
+    if (productFlexContainerAccessories) {
+      productFlexContainerAccessories.appendChild(productBox);
     }
   }
 }
@@ -200,7 +198,24 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((response) => response.json())
     .then((data) => {
       data.forEach((product) => {
-        renderProduct(product);
+        if (
+          window.location.pathname.includes("ggc") &&
+          product.product_owner === "GreenGarb Collective"
+        ) {
+          renderProduct(product);
+        } else if (
+          window.location.pathname.includes("ect") &&
+          product.product_owner === "EcoChic Threads"
+        ) {
+          renderProduct(product);
+        } else if (
+          window.location.pathname.includes("eea") &&
+          product.product_owner === "EarthlyElegance Apparel"
+        ) {
+          renderProduct(product);
+        } else if (window.location.pathname.endsWith("products.html")) {
+          renderProduct(product);
+        }
       });
     });
 });
