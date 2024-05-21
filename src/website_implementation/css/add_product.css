@@ -2,7 +2,6 @@
 
 body {
   background-color: var(--background);
-  font-family: var(--font-family);
   color: var(--text);
   display: flex;
   justify-content: left;
@@ -20,6 +19,7 @@ h1 {
   margin-bottom: 20px;
   font-size: 24px;
   color: var(--text);
+  font-family: var(--font-family);
 }
 
 .form-group {
@@ -30,6 +30,8 @@ h1 {
 label {
   display: block;
   margin-bottom: 5px;
+  font-family: var(--font-family);
+  font-weight: var(--text-weight);
   color: var(--text);
 }
 
@@ -86,6 +88,7 @@ label[for="product_photo"]:hover {
 
 .submit-btn {
   background-color: var(--background_dropdown);
+  font-family: var(--font-family);
   color: var(--text);
   padding: 15px 30px;
   border: 2px solid var(--background_dropdown);
