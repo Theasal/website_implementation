@@ -26,6 +26,74 @@ const toggleNav = (open) => {
   }
 };
 
+// Save sidenav state to localStorage
+const saveSidenavState = () => {
+  const dropdownStates = [];
+  const dropdownActiveStates = [];
+  const highlightedLinks = [];
+
+  document.querySelectorAll(".dropdown-container").forEach((dropdown) => {
+    dropdownStates.push(dropdown.style.display === "block");
+  });
+
+  document.querySelectorAll(".dropdown-btn").forEach((btn) => {
+    dropdownActiveStates.push(btn.classList.contains("active"));
+  });
+
+  document.querySelectorAll("#sidenav a").forEach((link) => {
+    highlightedLinks.push(link.classList.contains("highlighted"));
+  });
+
+  localStorage.setItem("dropdownStates", JSON.stringify(dropdownStates));
+  localStorage.setItem(
+    "dropdownActiveStates",
+    JSON.stringify(dropdownActiveStates)
+  );
+  localStorage.setItem("highlightedLinks", JSON.stringify(highlightedLinks));
+};
+
+// Load sidenav state from localStorage
+const loadSidenavState = () => {
+  const dropdownStates = JSON.parse(
+    localStorage.getItem("dropdownStates") || "[]"
+  );
+  const dropdownActiveStates = JSON.parse(
+    localStorage.getItem("dropdownActiveStates") || "[]"
+  );
+  const highlightedLinks = JSON.parse(
+    localStorage.getItem("highlightedLinks") || "[]"
+  );
+
+  document
+    .querySelectorAll(".dropdown-container")
+    .forEach((dropdown, index) => {
+      if (dropdownStates[index]) {
+        dropdown.style.display = "block";
+        const caret =
+          dropdown.previousElementSibling.querySelector(".fa-caret-down");
+        if (caret) caret.classList.add("rotate");
+      } else {
+        dropdown.style.display = "none";
+      }
+    });
+
+  document.querySelectorAll(".dropdown-btn").forEach((btn, index) => {
+    if (dropdownActiveStates[index]) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+
+  document.querySelectorAll("#sidenav a").forEach((link, index) => {
+    if (highlightedLinks[index]) {
+      link.classList.add("highlighted");
+    } else {
+      link.classList.remove("highlighted");
+    }
+  });
+};
+
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
@@ -143,7 +211,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Load the header and sidenav into their respective placeholders
-  loadHTML("header-placeholder", "header.html");
+  loadHTML("header-placeholder", "header.html", () => {
+    console.log("banan");
+    document.getElementById("logo").addEventListener("click", function () {
+      // Remove highlighted class from all links
+      document
+        .querySelectorAll("#sidenav a")
+        .forEach((link) => link.classList.remove("highlighted"));
+      document
+        .querySelectorAll(".dropdown-btn")
+        .forEach((btn) => btn.classList.remove("activated"));
+      // Save the sidenav state after clearing highlighted links
+      saveSidenavState();
+    });
+  });
   loadHTML("sidenav-placeholder", "sidenav.html", () => {
     // Now that sidenav is loaded, add event listeners
     const sidenavBtn = document.getElementById("sidenav-btn");
@@ -169,28 +250,23 @@ document.addEventListener("DOMContentLoaded", function () {
         dropdownContent.style.display =
           dropdownContent.style.display === "block" ? "none" : "block";
         this.querySelector(".fa-caret-down").classList.toggle("rotate");
+        saveSidenavState(); // Save state when dropdown is toggled
       });
     });
 
     const links = document.querySelectorAll("#sidenav a");
     links.forEach((link) => {
       link.addEventListener("click", function (event) {
-        event.preventDefault();
-        const href = this.getAttribute("href");
-        document.getElementById("content-frame").src = href;
-        if (window.innerWidth < 769) {
-          toggleNav(false);
-        }
-      });
-
-      link.addEventListener("click", function (event) {
-        event.preventDefault();
+        // Remove highlighted class from all links
         links.forEach((link) => link.classList.remove("highlighted"));
+        // Add highlighted class to the clicked link
         this.classList.add("highlighted");
-        const href = this.getAttribute("href");
-        document.getElementById("content-frame").src = href;
+        saveSidenavState(); // Save state when a link is clicked
       });
     });
+
+    // Load the sidenav state on page load
+    loadSidenavState();
   });
 
   const queryParams = {
