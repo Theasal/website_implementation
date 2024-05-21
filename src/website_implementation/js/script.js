@@ -212,7 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Load the header and sidenav into their respective placeholders
   loadHTML("header-placeholder", "header.html", () => {
-    console.log("banan");
     document.getElementById("logo").addEventListener("click", function () {
       // Remove highlighted class from all links
       document
@@ -243,9 +242,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+
     dropdownBtns.forEach((btn) => {
       btn.addEventListener("click", function () {
         this.classList.toggle("active");
+
         const dropdownContent = this.nextElementSibling;
         dropdownContent.style.display =
           dropdownContent.style.display === "block" ? "none" : "block";
@@ -302,4 +303,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     });
+
+  const submitBtn = document.querySelector(".submit-btn");
+  if (submitBtn) {
+    submitBtn.addEventListener("click", function () {
+      handleFormSubmit();
+    });
+  }
 });
