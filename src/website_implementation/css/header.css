@@ -1,7 +1,7 @@
 @import url("index.css");
 
 #header {
-  background-color: var(--background_elements);
+  background-color: var(--background-elements);
   display: flex;
   justify-content: center;
   align-items: center;

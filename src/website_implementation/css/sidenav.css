@@ -1,6 +1,6 @@
 @import url("index.css");
 #sidenav {
-  background-color: var(--background_elements);
+  background-color: var(--background-elements);
   overflow-x: hidden;
   height: 100%;
   width: 230px;
@@ -23,7 +23,7 @@
 }
 
 #sidenav-btn {
-  background-color: var(--background_elements);
+  background-color: var(--background-elements);
   position: absolute;
   cursor: pointer;
   top: 130px;
@@ -47,7 +47,7 @@
 
 .dropdown-container {
   display: none;
-  background-color: var(--background_dropdown);
+  background-color: var(--background-dropdown);
   padding-left: 8px;
 }
 
