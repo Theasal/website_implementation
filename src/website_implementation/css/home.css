@@ -10,7 +10,7 @@ body {
   align-items: center;
 }
 
-#brand-container {
+.brand-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
