@@ -2,7 +2,6 @@
 #sidenav {
   background-color: var(--background_elements);
   overflow-x: hidden;
-  padding-top: 20px;
   height: 100%;
   width: 230px;
 }
