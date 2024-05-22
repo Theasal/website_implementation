@@ -1,8 +1,8 @@
 :root {
   --background: #ffffff;
-  --background_elements: #f6ecde;
+  --background-elements: #f6ecde;
   --text: #020202;
-  --background_dropdown: #ccb493;
+  --background-dropdown: #ccb493;
   --selected: #decbb0;
   --border-color: #ccb493;
   --font-family: "Inria Serif", serif;
