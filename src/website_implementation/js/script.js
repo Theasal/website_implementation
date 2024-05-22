@@ -94,6 +94,7 @@ const loadSidenavState = () => {
   });
 };
 
+// Handle form submission
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
@@ -108,12 +109,12 @@ const handleFormSubmit = (event) => {
   const errorText = document.createElement("p");
   const errorElement = document.getElementById("error-text");
   errorElement.appendChild(errorText);
+
+  // Form validation
   if (formData.get("product_name") === "") {
     errorText.textContent = "You need to enter a product name";
   } else if (formData.get("product_owner") === "") {
     errorText.textContent = "You need to enter a product owner";
-  } else if (formData.get("product_description") === "") {
-    errorText.textContent = "You need to enter a product description";
   } else if (formData.get("product_description") === "") {
     errorText.textContent = "You need to enter a product description";
   } else if (formData.get("product_info2") === "") {
@@ -145,6 +146,7 @@ const handleFormSubmit = (event) => {
   errorElement.replaceChildren(errorText);
 };
 
+// Handle file input change
 const handleFileChange = () => {
   const fileInput = document.getElementById("product_photo");
   const fileLabel = document.getElementById("file_label");
@@ -155,6 +157,7 @@ const handleFileChange = () => {
   fileLabel.innerHTML = `${fileName}`;
 };
 
+// Render product
 const renderProduct = (product) => {
   const productFlexContainerTop = document.querySelector(
     ".product-flex-container-top"
@@ -190,15 +193,19 @@ const renderProduct = (product) => {
   if (
     product.product_name === "Sweater" ||
     product.product_name === "Top" ||
-    product.product_name === "T-shirt"
+    product.product_name === "T-shirt" ||
+    product.product_name === "Hoodie" ||
+    product.product_name === "Crewneck" ||
+    product.product_name === "Longsleeve"
   ) {
     if (productFlexContainerTop) {
       productFlexContainerTop.appendChild(productBox);
     }
   } else if (
     product.product_name === "Skirt" ||
-    product.product_name === "Pant" ||
-    product.product_name === "Jeans"
+    product.product_name.includes("Pant") ||
+    product.product_name === "Jeans" ||
+    product.product_name === "Shorts"
   ) {
     if (productFlexContainerBottom) {
       productFlexContainerBottom.appendChild(productBox);
@@ -210,6 +217,7 @@ const renderProduct = (product) => {
   }
 };
 
+// Fetch and render products
 const queryParams = { website_code: my_website_code };
 const queryString = new URLSearchParams(queryParams).toString();
 const urlWithParams = baseURL + "?" + queryString;
@@ -251,6 +259,7 @@ fetch(urlWithParams, requestOptions)
     console.error("Error fetching data:", error);
   });
 
+// Load HTML content
 function loadHTML(elementId, filePath, callback) {
   fetch(filePath)
     .then((response) => {
@@ -266,6 +275,7 @@ function loadHTML(elementId, filePath, callback) {
     .catch((error) => console.error("Error loading HTML:", error));
 }
 
+// Page setup on first load
 document.addEventListener("DOMContentLoaded", () => {
   loadHTML("header-placeholder", "header.html", () => {
     document.getElementById("logo").addEventListener("click", function () {
