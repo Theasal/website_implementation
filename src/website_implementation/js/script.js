@@ -101,10 +101,16 @@ const handleFormSubmit = (event) => {
   const form = document.getElementById("contribute-form");
   const formData = new FormData(form);
 
-  const sizes = Array.from(
+  let sizes = Array.from(
     document.querySelectorAll('input[name="size"]:checked')
-  ).map((checkbox) => checkbox.value);
+  ).map((checkbox) => {
+    if (checkbox.value === "Other") {
+      return document.getElementById("other").value.trim() || "Other";
+    }
+    return checkbox.value;
+  });
   const sizesString = sizes.join(",");
+
   formData.set("product_info1", sizesString);
   const errorText = document.createElement("p");
   const errorElement = document.getElementById("error-text");
