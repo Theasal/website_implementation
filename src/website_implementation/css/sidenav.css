@@ -46,7 +46,6 @@
 }
 
 .dropdown-container {
-  font-size: 5px;
   display: none;
   background-color: var(--background_dropdown);
   padding-left: 8px;
