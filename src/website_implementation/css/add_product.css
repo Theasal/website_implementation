@@ -85,6 +85,25 @@ label[for="product_photo"]:hover {
 .checkbox-group label {
   font-size: 15px;
 }
+#form-confirmation {
+  display: none;
+}
+
+#contribute-form {
+  display: block;
+}
+
+#form-confirmation.active {
+  display: block;
+  background-color: var(--background);
+}
+
+#contribute-form.hidden {
+  display: none;
+}
+#error-text {
+  color: var(--error-text);
+}
 
 .submit-btn {
   background-color: var(--background_dropdown);

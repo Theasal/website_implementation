@@ -1,9 +1,9 @@
-// Global Constants
+// Constants
 const baseURL =
   "https://damp-castle-86239-1b70ee448fbd.herokuapp.com/decoapi/genericproduct/";
 const my_website_code = "theassa";
 
-// Constant Functions
+// Toggle side navigation
 const toggleNav = (open) => {
   const sidenav = document.getElementById("sidenav");
   const main = document.querySelector(".main");
@@ -97,38 +97,52 @@ const loadSidenavState = () => {
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
-  const form = document.getElementById("contributeForm");
+  const form = document.getElementById("contribute-form");
   const formData = new FormData(form);
-  const sizes = [];
-  document
-    .querySelectorAll('input[type="checkbox"]:checked')
-    .forEach((checkbox) => {
-      sizes.push(checkbox.value);
-    });
+
+  const sizes = Array.from(
+    document.querySelectorAll('input[name="size"]:checked')
+  ).map((checkbox) => checkbox.value);
   const sizesString = sizes.join(",");
-
   formData.set("product_info1", sizesString);
-  formData.set("website_code", my_website_code);
+  const errorText = document.createElement("p");
+  const errorElement = document.getElementById("error-text");
+  errorElement.appendChild(errorText);
+  if (formData.get("product_name") === "") {
+    errorText.textContent = "You need to enter a product name";
+  } else if (formData.get("product_owner") === "") {
+    errorText.textContent = "You need to enter a product owner";
+  } else if (formData.get("product_description") === "") {
+    errorText.textContent = "You need to enter a product description";
+  } else if (formData.get("product_description") === "") {
+    errorText.textContent = "You need to enter a product description";
+  } else if (formData.get("product_info2") === "") {
+    errorText.textContent = "You need to enter a price";
+  } else if (formData.get("product_photo") === "") {
+    errorText.textContent = "You need upload an image";
+  } else {
+    formData.set("website_code", my_website_code);
 
-  const requestOptions = {
-    method: "POST",
-    body: formData,
-    redirect: "follow",
-  };
+    const requestOptions = {
+      method: "POST",
+      body: formData,
+      redirect: "follow",
+    };
 
-  fetch(baseURL, requestOptions)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Success:", data);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    fetch(baseURL, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          errorText.textContent = "Network response was not successful";
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data);
+        document.getElementById("form-confirmation").classList.add("active");
+        form.classList.add("hidden");
+      });
+  }
+  errorElement.replaceChildren(errorText);
 };
 
 const handleFileChange = () => {
@@ -141,7 +155,7 @@ const handleFileChange = () => {
   fileLabel.innerHTML = `${fileName}`;
 };
 
-function renderProduct(product) {
+const renderProduct = (product) => {
   const productFlexContainerTop = document.querySelector(
     ".product-flex-container-top"
   );
@@ -173,7 +187,11 @@ function renderProduct(product) {
   productPrice.textContent = `$${product.product_info2}`;
   productBox.appendChild(productPrice);
 
-  if (product.product_name === "Sweater" || product.product_name === "Top") {
+  if (
+    product.product_name === "Sweater" ||
+    product.product_name === "Top" ||
+    product.product_name === "T-shirt"
+  ) {
     if (productFlexContainerTop) {
       productFlexContainerTop.appendChild(productBox);
     }
@@ -190,124 +208,117 @@ function renderProduct(product) {
       productFlexContainerAccessories.appendChild(productBox);
     }
   }
+};
+
+const queryParams = { website_code: my_website_code };
+const queryString = new URLSearchParams(queryParams).toString();
+const urlWithParams = baseURL + "?" + queryString;
+const requestOptions = {
+  method: "GET",
+  redirect: "follow",
+};
+
+fetch(urlWithParams, requestOptions)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    data.forEach((product) => {
+      if (
+        window.location.pathname.includes("ggc") &&
+        product.product_owner === "GreenGarb Collective"
+      ) {
+        renderProduct(product);
+      } else if (
+        window.location.pathname.includes("ect") &&
+        product.product_owner === "EcoChic Threads"
+      ) {
+        renderProduct(product);
+      } else if (
+        window.location.pathname.includes("eea") &&
+        product.product_owner === "EarthlyElegance Apparel"
+      ) {
+        renderProduct(product);
+      } else if (window.location.pathname.endsWith("products.html")) {
+        renderProduct(product);
+      }
+    });
+  })
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+  });
+
+function loadHTML(elementId, filePath, callback) {
+  fetch(filePath)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Could not load ${filePath}: ${response.statusText}`);
+      }
+      return response.text();
+    })
+    .then((data) => {
+      document.getElementById(elementId).innerHTML = data;
+      if (callback) callback();
+    })
+    .catch((error) => console.error("Error loading HTML:", error));
 }
 
-// Event Listeners
-document.addEventListener("DOMContentLoaded", function () {
-  // Function to load HTML content from a file into a specified element
-  function loadHTML(elementId, filePath, callback) {
-    fetch(filePath)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Could not load ${filePath}: ${response.statusText}`);
-        }
-        return response.text();
-      })
-      .then((data) => {
-        document.getElementById(elementId).innerHTML = data;
-        if (callback) callback();
-      })
-      .catch((error) => console.error("Error loading HTML:", error));
-  }
-
-  // Load the header and sidenav into their respective placeholders
+document.addEventListener("DOMContentLoaded", () => {
   loadHTML("header-placeholder", "header.html", () => {
     document.getElementById("logo").addEventListener("click", function () {
-      // Remove highlighted class from all links
       document
         .querySelectorAll("#sidenav a")
         .forEach((link) => link.classList.remove("highlighted"));
       document
         .querySelectorAll(".dropdown-btn")
         .forEach((btn) => btn.classList.remove("activated"));
-      // Save the sidenav state after clearing highlighted links
       saveSidenavState();
     });
   });
+
   loadHTML("sidenav-placeholder", "sidenav.html", () => {
-    // Now that sidenav is loaded, add event listeners
     const sidenavBtn = document.getElementById("sidenav-btn");
     const exitBtn = document.getElementById("exit-btn");
-    if (sidenavBtn) {
-      sidenavBtn.addEventListener("click", () => toggleNav(true));
-    }
-    if (exitBtn) {
-      exitBtn.addEventListener("click", () => toggleNav(false));
-    }
+
+    if (sidenavBtn) sidenavBtn.addEventListener("click", () => toggleNav(true));
+    if (exitBtn) exitBtn.addEventListener("click", () => toggleNav(false));
 
     const fileInput = document.getElementById("product_photo");
     const fileLabel = document.getElementById("file_label");
-    if (fileInput && fileLabel) {
+    if (fileInput && fileLabel)
       fileInput.addEventListener("change", handleFileChange);
-    }
 
     const dropdownBtns = document.querySelectorAll(".dropdown-btn");
-
     dropdownBtns.forEach((btn) => {
       btn.addEventListener("click", function () {
         this.classList.toggle("active");
-
-        const dropdownContent = this.nextElementSibling;
-        dropdownContent.style.display =
-          dropdownContent.style.display === "block" ? "none" : "block";
-        this.querySelector(".fa-caret-down").classList.toggle("rotate");
-        saveSidenavState(); // Save state when dropdown is toggled
+        if (this.nextElementSibling) {
+          const dropdownContent = this.nextElementSibling;
+          dropdownContent.style.display =
+            dropdownContent.style.display === "block" ? "none" : "block";
+          this.querySelector(".fa-caret-down").classList.toggle("rotate");
+        }
+        saveSidenavState();
       });
     });
 
     const links = document.querySelectorAll("#sidenav a");
     links.forEach((link) => {
-      link.addEventListener("click", function (event) {
-        // Remove highlighted class from all links
+      link.addEventListener("click", function () {
         links.forEach((link) => link.classList.remove("highlighted"));
-        // Add highlighted class to the clicked link
         this.classList.add("highlighted");
-        saveSidenavState(); // Save state when a link is clicked
+        saveSidenavState();
       });
     });
 
-    // Load the sidenav state on page load
     loadSidenavState();
   });
 
-  const queryParams = {
-    website_code: my_website_code,
-  };
-  const queryString = new URLSearchParams(queryParams).toString();
-  const urlWithParams = baseURL + "?" + queryString;
-  const requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-  fetch(urlWithParams, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((product) => {
-        if (
-          window.location.pathname.includes("ggc") &&
-          product.product_owner === "GreenGarb Collective"
-        ) {
-          renderProduct(product);
-        } else if (
-          window.location.pathname.includes("ect") &&
-          product.product_owner === "EcoChic Threads"
-        ) {
-          renderProduct(product);
-        } else if (
-          window.location.pathname.includes("eea") &&
-          product.product_owner === "EarthlyElegance Apparel"
-        ) {
-          renderProduct(product);
-        } else if (window.location.pathname.endsWith("products.html")) {
-          renderProduct(product);
-        }
-      });
-    });
-
-  const submitBtn = document.querySelector(".submit-btn");
-  if (submitBtn) {
-    submitBtn.addEventListener("click", function () {
-      handleFormSubmit();
-    });
+  const form = document.getElementById("contribute-form");
+  if (form) {
+    form.addEventListener("submit", handleFormSubmit);
   }
 });
