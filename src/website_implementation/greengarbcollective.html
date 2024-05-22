@@ -13,8 +13,8 @@
     <title>GreenGarb Collective</title>
   </head>
   <body>
-    <div id="header-placeholder"></div>
-    <div id="sidenav-placeholder"></div>
+    <div id="header-placeholder" aria-hidden="true"></div>
+    <div id="sidenav-placeholder" aria-hidden="true"></div>
 
     <main class="main">
       <div class="brand-header">
@@ -26,7 +26,9 @@
         <p class="brand-title">GreenGarb Collective</p>
       </div>
       <div class="brand-info">
-        <p>
+        <p
+          aria-label="Welcome to GreenGarb Collective, where sustainability is woven into every stitch. Our materials are carefully sourced from eco-friendly suppliers, ensuring that each garment is crafted from the highest quality organic cotton, recycled fabrics, and natural fibers. By choosing sustainable materials, we reduce our reliance on harmful chemicals and support the preservation of our planet's resources. At GreenGarb Collective, we hold ourselves to the highest ethical standards. We are dedicated to ensuring fair labor practices throughout our supply chain, from the farmers who grow our cotton to the skilled artisans who bring our designs to life. By partnering with certified fair trade factories, we empower workers with safe working conditions, fair wages, and opportunities for growth and development. Furthermore, we are deeply committed to minimizing our environmental impact. Our production processes prioritize energy efficiency, water conservation, and waste reduction. We continuously seek out innovative solutions to reduce our carbon footprint and strive towards a circular economy model, where resources are reused and recycled to minimize waste. With GreenGarb Collective, you can shop confidently, knowing that each garment is not only stylish and comfortable but also sustainable and ethical. Join us in making a positive impact on the fashion industry and the world around us."
+        >
           Welcome to GreenGarb Collective, where sustainability is woven into
           every stitch. Our materials are carefully sourced from eco-friendly
           suppliers, ensuring that each garment is crafted from the highest
@@ -49,8 +51,8 @@
           sustainable and ethical. Join us in making a positive impact on the
           fashion industry and the world around us.
         </p>
-        <p class="product-title">Our products</p>
-        <div class="product-flex-container">
+        <p class="product-title" aria-label="Our products">Our products</p>
+        <div class="product-flex-container" aria-labelledby="product-title">
           <div class="product-box">
             <img
               src="media/ggc_sweater.png"
@@ -82,7 +84,9 @@
             <p>$70</p>
           </div>
         </div>
-        <a href="product_ggc.html">See all our products-></a>
+        <a href="product_ggc.html" aria-label="See all our products"
+          >See all our products-></a
+        >
       </div>
     </main>
   </body>

@@ -15,17 +15,17 @@
   <body>
     <div id="header-placeholder"></div>
     <div id="sidenav-placeholder"></div>
-    <main class="main">
+    <main class="main" aria-labelledby="brand-title">
       <div class="brand-header">
         <img
           src="media/earthlyeleganceapparel.png"
           class="brand-logo"
           alt="brand logo"
         />
-        <p class="brand-title">EarthlyElegance Apparel</p>
+        <p class="brand-title" id="brand-title">EarthlyElegance Apparel</p>
       </div>
-      <div class="brand-info">
-        <p>
+      <div class="brand-info" aria-labelledby="brand-info-title">
+        <p id="brand-info-title">
           Welcome to EarthlyElegance Apparel, where sustainability and style
           intertwine seamlessly. Our passion for fashion is matched only by our
           dedication to the planet and its people, guiding every aspect of our
@@ -59,8 +59,8 @@
           it is magnificent. Together, we can elevate fashion to new heights of
           Earthly elegance.
         </p>
-        <p class="product-title">Our products</p>
-        <div class="product-flex-container">
+        <p class="product-title" id="product-title">Our products</p>
+        <div class="product-flex-container" aria-labelledby="product-title">
           <div class="product-box">
             <img
               src="media/eea_sweater.png"
@@ -92,7 +92,9 @@
             <p>$75</p>
           </div>
         </div>
-        <a href="product_eea.html">See all our products-></a>
+        <a href="product_eea.html" aria-label="See all our products"
+          >See all our products-></a
+        >
       </div>
     </main>
     <script src="js/script.js"></script>

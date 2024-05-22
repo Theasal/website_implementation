@@ -17,16 +17,16 @@
     <div id="sidenav-placeholder"></div>
 
     <main class="main">
-      <div class="brand-header">
+      <div class="brand-header" aria-labelledby="brand-title">
         <img
           src="media/ecochictreads.png"
           class="brand-logo"
           alt="brand logo"
         />
-        <p class="brand-title">EcoChic Threads</p>
+        <p class="brand-title" id="brand-title">EcoChic Threads</p>
       </div>
-      <div class="brand-info">
-        <p>
+      <div class="brand-info" aria-labelledby="brand-info-title">
+        <p id="brand-info-title">
           Welcome to EcoChic Threads, where fashion meets sustainability in
           every stitch. Our mission is to redefine eco-conscious clothing by
           offering stylish and eco-friendly alternatives that reflect our
@@ -58,8 +58,8 @@
           fashion that's not only stylish but also sustainable. Together, we can
           make a difference, one thread at a time.
         </p>
-        <p class="product-title">Our products</p>
-        <div class="product-flex-container">
+        <p class="product-title" id="product-title">Our products</p>
+        <div class="product-flex-container" aria-labelledby="product-title">
           <div class="product-box">
             <img
               src="media/ect_sweater.png"
@@ -88,7 +88,9 @@
             <p>$85</p>
           </div>
         </div>
-        <a href="product_ect.html">See all our products-></a>
+        <a href="product_ect.html" aria-label="See all our products"
+          >See all our products-></a
+        >
       </div>
     </main>
     <script src="js/script.js"></script>
