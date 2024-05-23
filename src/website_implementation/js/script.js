@@ -32,14 +32,17 @@ const saveSidenavState = () => {
   const dropdownActiveStates = [];
   const highlightedLinks = [];
 
+  // Save which dropdown is open
   document.querySelectorAll(".dropdown-container").forEach((dropdown) => {
     dropdownStates.push(dropdown.style.display === "block");
   });
 
+  // Save which dropdown buttons is active
   document.querySelectorAll(".dropdown-btn").forEach((btn) => {
     dropdownActiveStates.push(btn.classList.contains("active"));
   });
 
+  // Save which dropdown link is clicked
   document.querySelectorAll("#sidenav a").forEach((link) => {
     highlightedLinks.push(link.classList.contains("highlighted"));
   });
@@ -64,6 +67,7 @@ const loadSidenavState = () => {
     localStorage.getItem("highlightedLinks") || "[]"
   );
 
+  // Set the right state on the dropdown containers
   document
     .querySelectorAll(".dropdown-container")
     .forEach((dropdown, index) => {
@@ -77,6 +81,7 @@ const loadSidenavState = () => {
       }
     });
 
+  // Set the right state on the dropdown buttons
   document.querySelectorAll(".dropdown-btn").forEach((btn, index) => {
     if (dropdownActiveStates[index]) {
       btn.classList.add("active");
@@ -85,6 +90,7 @@ const loadSidenavState = () => {
     }
   });
 
+  // Set the right state on the dropdown links
   document.querySelectorAll("#sidenav a").forEach((link, index) => {
     if (highlightedLinks[index]) {
       link.classList.add("highlighted");
@@ -98,9 +104,11 @@ const loadSidenavState = () => {
 const handleFormSubmit = (event) => {
   event.preventDefault();
 
+  //Get data from the form
   const form = document.getElementById("contribute-form");
   const formData = new FormData(form);
 
+  //Create a string of the sizes
   let sizes = Array.from(
     document.querySelectorAll('input[name="size"]:checked')
   ).map((checkbox) => {
@@ -111,7 +119,10 @@ const handleFormSubmit = (event) => {
   });
   const sizesString = sizes.join(",");
 
+  //Set sizes in the form
   formData.set("product_info1", sizesString);
+
+  //Create errortext element
   const errorText = document.createElement("p");
   const errorElement = document.getElementById("error-text");
   errorElement.appendChild(errorText);
@@ -130,33 +141,40 @@ const handleFormSubmit = (event) => {
   } else {
     formData.set("website_code", my_website_code);
 
+    //Post request
     const requestOptions = {
       method: "POST",
       body: formData,
       redirect: "follow",
     };
 
+    //Post to baseUrl with data
     fetch(baseURL, requestOptions)
       .then((response) => {
+        //Error if not sucessfull
         if (!response.ok) {
           errorText.textContent = "Network response was not successful";
         }
         return response.json();
       })
+      //Sucessful response
       .then((data) => {
         console.log("Success:", data);
         document.getElementById("form-confirmation").classList.add("active");
         form.classList.add("hidden");
       });
   }
+  //Replace errorelement
   errorElement.replaceChildren(errorText);
 };
 
 // Handle file input change
 const handleFileChange = () => {
+  //Get the photo and file label from html
   const fileInput = document.getElementById("product_photo");
   const fileLabel = document.getElementById("file_label");
   let fileName = fileInput.files[0].name;
+  //Create a shortening if name is to long
   if (fileName.length > 20) {
     fileName = fileName.substring(0, 18) + "...";
   }
@@ -165,6 +183,7 @@ const handleFileChange = () => {
 
 // Render product
 const renderProduct = (product) => {
+  // Get the products containers from html
   const productFlexContainerTop = document.querySelector(
     ".product-flex-container-top"
   );
@@ -175,6 +194,7 @@ const renderProduct = (product) => {
     ".product-flex-container-accessories"
   );
 
+  // Create product html element
   const productBox = document.createElement("div");
   productBox.classList.add("product-box");
 
@@ -196,6 +216,7 @@ const renderProduct = (product) => {
   productPrice.textContent = `$${product.product_info2}`;
   productBox.appendChild(productPrice);
 
+  //Filter products in category tops
   if (
     product.product_name === "Sweater" ||
     product.product_name === "Top" ||
@@ -207,7 +228,9 @@ const renderProduct = (product) => {
     if (productFlexContainerTop) {
       productFlexContainerTop.appendChild(productBox);
     }
-  } else if (
+  }
+  //Filter products in category bottoms
+  else if (
     product.product_name === "Skirt" ||
     product.product_name.includes("Pant") ||
     product.product_name === "Jeans" ||
@@ -216,7 +239,8 @@ const renderProduct = (product) => {
     if (productFlexContainerBottom) {
       productFlexContainerBottom.appendChild(productBox);
     }
-  } else {
+  } //Rest in accessories
+  else {
     if (productFlexContainerAccessories) {
       productFlexContainerAccessories.appendChild(productBox);
     }
@@ -227,18 +251,21 @@ const renderProduct = (product) => {
 const queryParams = { website_code: my_website_code };
 const queryString = new URLSearchParams(queryParams).toString();
 const urlWithParams = baseURL + "?" + queryString;
+//Get request option
 const requestOptions = {
   method: "GET",
   redirect: "follow",
 };
 
 fetch(urlWithParams, requestOptions)
+  //Return error if request was not sucessful
   .then((response) => {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     return response.json();
   })
+  //Render products if sucessfull
   .then((data) => {
     data.forEach((product) => {
       if (
@@ -261,6 +288,7 @@ fetch(urlWithParams, requestOptions)
       }
     });
   })
+  //Catch errors
   .catch((error) => {
     console.error("Error fetching data:", error);
   });
@@ -268,12 +296,14 @@ fetch(urlWithParams, requestOptions)
 // Load HTML content
 function loadHTML(elementId, filePath, callback) {
   fetch(filePath)
+    //Error if request is not successful
     .then((response) => {
       if (!response.ok) {
         throw new Error(`Could not load ${filePath}: ${response.statusText}`);
       }
       return response.text();
     })
+    //Set element by sucess
     .then((data) => {
       document.getElementById(elementId).innerHTML = data;
       if (callback) callback();
@@ -282,7 +312,9 @@ function loadHTML(elementId, filePath, callback) {
 }
 
 // Page setup on first load
+
 document.addEventListener("DOMContentLoaded", () => {
+  //Load header into pages
   loadHTML("header-placeholder", "header.html", () => {
     document.getElementById("logo").addEventListener("click", function () {
       document
@@ -295,6 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  //Load sidenav into pages
   loadHTML("sidenav-placeholder", "sidenav.html", () => {
     const sidenavBtn = document.getElementById("sidenav-btn");
     const exitBtn = document.getElementById("exit-btn");
@@ -308,6 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
       fileInput.addEventListener("change", handleFileChange);
 
     const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+    //Open dropdown when dropdown button is clicked
     dropdownBtns.forEach((btn) => {
       btn.addEventListener("click", function () {
         this.classList.toggle("active");
@@ -321,6 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
+    // Highlight link is clicked
     const links = document.querySelectorAll("#sidenav a");
     links.forEach((link) => {
       link.addEventListener("click", function () {
@@ -333,6 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadSidenavState();
   });
 
+  //Send post request when submit is clicked
   const form = document.getElementById("contribute-form");
   if (form) {
     form.addEventListener("submit", handleFormSubmit);
